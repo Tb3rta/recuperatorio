@@ -1,5 +1,5 @@
 from SorteTableMapAbstract import ABC
-class SortedTableMap(ABC):
+class SortedTableMap(ABC,mapbase):
     
     def __init__(self) -> None:
         """ Crea la lista Python donde se almacenarán todas las entradas como una lista
@@ -11,7 +11,7 @@ class SortedTableMap(ABC):
         Returns:
         int: devuelve la longitud de la lista self._table
         """
-        pass
+        return len(self._table)
     
     def __repr__(self) -> str:
         """ Convierte en str el Mapeo.
@@ -32,11 +32,14 @@ class SortedTableMap(ABC):
         Args:
         k (Any): clave del ítem que hay que buscar.
         Raises:
-        KeyError: Arroja KeyError cuando la clave no pertenece al Mapeo.
+        KeyError: Arroia KeyError cuando la clave no pertenece al Mapeo.
         Returns:
         Any: Devuelve el _value del ítem cuya clave coincide con k.
         """
-        pass
+        i= self._find_index(k, 0, len(self._table) - 1)
+        if i== len(self._table) or self._table[i]._key != k:
+            raise KeyError('Key Error:' + repr(k))
+        return self._table[i]._value
 
     def __setitem__(self, k: Any, v: Any) -> None:
         """ Establece como v como el nuevo valor del ítem con clave k.
@@ -44,8 +47,15 @@ class SortedTableMap(ABC):
         k (Any): clave que se va a buscar en el mapeo.
         v (Any): valor para asignar al ítem con clave que k.
         """
+        i = self._find_index(k, 0, len(self._table) - 1)
+        if i < len(self._table) and self._table[i]._key == k:
+            # reassign value
+            self._table[i]._value = v
+        else:
+            # adds new item
+            self._table.insert(i, self._Item(k, v))
 
-    pass
+    
 
     
     def __delitem__(self, k: Any) -> None:
@@ -53,10 +63,15 @@ class SortedTableMap(ABC):
         Args:
         k (Any): clave que se va a buscar en los ítems del Mapeo.
         Raises:
-        KeyError: Es arrojado cuando la clave k no se encuentra en el mapeo.
+        KeyError: Es arroiado cuando la clave k no se encuentra en el mapeo.
         """
+        j = self._find_index(k, 0, len(self._table) - 1)
+        if j == len(self._table) or self._table[j]._key != k:
+            raise KeyError('Key Error: ' + repr(k))
+        # delete item
+        self._table.pop(j)
 
-    pass
+    
 
     
     def __iter__(self) -> Generator[Any, None, None]:
