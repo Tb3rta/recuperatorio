@@ -72,6 +72,7 @@ class SortedTableMapAbstract (MapBase, ABC):
         Yields:
         Generator[Any, None, None]: devuelve todas las claves del Mapeo.
         """
+        
 
     pass
 

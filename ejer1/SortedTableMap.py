@@ -26,6 +26,7 @@ class SortedTableMap(ABC,mapbase):
         str: Concatena la versión en str de todas las entradas del Mapeo.
         """
         pass
+
     
     def __getitem__(self, k: Any) -> Any:
         """ Devuelve el valor asociado a la clave k en el Mapeo.
@@ -40,6 +41,7 @@ class SortedTableMap(ABC,mapbase):
         if i== len(self._table) or self._table[i]._key != k:
             raise KeyError('Key Error:' + repr(k))
         return self._table[i]._value
+
 
     def __setitem__(self, k: Any, v: Any) -> None:
         """ Establece como v como el nuevo valor del ítem con clave k.
@@ -56,8 +58,6 @@ class SortedTableMap(ABC,mapbase):
             self._table.insert(i, self._Item(k, v))
 
     
-
-    
     def __delitem__(self, k: Any) -> None:
         """ Elimina del Mapeo el ítem con clave k.
         Args:
@@ -71,22 +71,22 @@ class SortedTableMap(ABC,mapbase):
         # delete item
         self._table.pop(j)
 
-    
 
-    
     def __iter__(self) -> Generator[Any, None, None]:
         """ Devuelve un generator sobre el Mapeo que devuelve todas las claves.
         Yields:
         Generator[Any, None, None]: devuelve todas las claves del Mapeo.
         """
-
-    pass
+        for item in self._table:
+            yield item._key
 
     
     def iter_items(self) -> Generator[Any, None, None]:
         """ Devuelve un generator sobre el Mapeo que devuelve todos los ítems.
         Yields:
         Generator[Any, None, None]: devuelve todas los ítems del Mapeo.
-        """
+        """    
+        for item in self._table:
+            yield item._key
 
-    pass
+    
