@@ -25,7 +25,9 @@ class SortedTableMap(ABC,mapbase):
         Returns:
         str: Concatena la versión en str de todas las entradas del Mapeo.
         """
-        pass
+        res = ", ".join([str(x) for x in self.iter_items()])
+        return f"UnsortedTableMap({res})"
+        
 
     
     def __getitem__(self, k: Any) -> Any:
@@ -49,13 +51,11 @@ class SortedTableMap(ABC,mapbase):
         k (Any): clave que se va a buscar en el mapeo.
         v (Any): valor para asignar al ítem con clave que k.
         """
-        i = self._find_index(k, 0, len(self._table) - 1)
-        if i < len(self._table) and self._table[i]._key == k:
-            # reassign value
-            self._table[i]._value = v
-        else:
-            # adds new item
-            self._table.insert(i, self._Item(k, v))
+        for item in self._table:
+            if k == item._key:
+                item._value = v
+                return
+        self._table.append(self._Item(k, v))
 
     
     def __delitem__(self, k: Any) -> None:
@@ -68,7 +68,6 @@ class SortedTableMap(ABC,mapbase):
         j = self._find_index(k, 0, len(self._table) - 1)
         if j == len(self._table) or self._table[j]._key != k:
             raise KeyError('Key Error: ' + repr(k))
-        # delete item
         self._table.pop(j)
 
 
@@ -87,6 +86,6 @@ class SortedTableMap(ABC,mapbase):
         Generator[Any, None, None]: devuelve todas los ítems del Mapeo.
         """    
         for item in self._table:
-            yield item._key
+            yield item
 
     
