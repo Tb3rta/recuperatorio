@@ -4,7 +4,7 @@ from python_ed_fcad_uner.data_structures import MapBase
 class SortedTableMap(MapBase,ABC):
     
     def __init__(self) -> None:
-        self._table: List[MapBase._Item] = []
+        self._table = []
     
     def __len__(self) -> int:
         return len(self._table)
@@ -17,27 +17,25 @@ class SortedTableMap(MapBase,ABC):
         return f"UnsortedTableMap({res})"
 
     
-    def __getitem__(self, k: Any) -> Any:
+    def __getitem__(self, k: Any) -> Any: #retorno valor clave'k'
         j = self.indice(k, 0, len(self._table) - 1)
-        if j == len(self._table) or self._table[j]._key != k:
+        if (j == len(self._table) or self._table[j]._key != k):
             raise KeyError("Key Error:" + repr(k))
         return self._table[j]._value
 
 
-    def __setitem__(self, k: Any, v: Any) -> None:
+    def __setitem__(self, k: Any, v: Any) -> None: #sobreescribir valor existente, si esta.
         j = self.indice(k, 0, len(self._table) - 1)
-        if j < len(self._table) and self._table[j]._key == k:
-            # reassign value
+        if (j < len(self._table) and self._table[j]._key == k):
             self._table[j]._value = v
         else:
-            # adds new item
             self._table.insert(j, self._Item(k, v))
 
     
-    def __delitem__(self, k: Any) -> None:
+    def __delitem__(self, k: Any) -> None: #elimino valor clave 'K',+keyerror
         j = self.indice(k, 0, len(self._table) - 1)
-        if j == len(self._table) or self._table[j]._key != k:
-            raise KeyError('Key Error: ' + repr(k))
+        if (j == len(self._table) or self._table[j]._key != k):
+            raise KeyError("Key Error: " + repr(k))
         self._table.pop(j)
 
 
@@ -50,9 +48,7 @@ class SortedTableMap(MapBase,ABC):
         for item in self._table:
             yield item
 
-
-
-    def indice(self, k, bajo, alto):
+    def indice(self, k, bajo, alto):#utilice un indice para metodo get,del,set
         if alto < bajo:
             return alto + 1
         else:
