@@ -1,5 +1,4 @@
-from SorteTableMapAbstract import SortedTableMapAbstract
-
+from recuperatorio.ejer1.SortedTableMap import SortedTableMap
 print(f"{'':*^60}")
 print(f"{' SortedTableMap ':*^60}")
 print(f"{'':*^60}")
@@ -17,7 +16,9 @@ for texto in lorem_ipsum.split():
     palabra = ''.join(c for c in texto if c.isalpha())
     if palabra:
         mapeo[palabra] = 1 + mapeo.get(palabra, 0)
+
 print(mapeo)
+
 max_palabra = ''
 max_cantidad = 0
 
@@ -28,3 +29,7 @@ for (p, c) in mapeo.items():
 
 print('La palabra más frecuente es:', max_palabra)
 print('El número de ocurrencias es:', max_cantidad)
+
+print("-------------------------------------")
+
+
