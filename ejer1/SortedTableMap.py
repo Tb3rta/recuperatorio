@@ -18,22 +18,24 @@ class SortedTableMap(MapBase,ABC):
 
     
     def __getitem__(self, k: Any) -> Any:
-        for item in self._table:
-            if k == item._key:
-                return item._value
-        raise KeyError('Key Error: ' + repr(k))
+        j = self.indice(k, 0, len(self._table) - 1)
+        if j == len(self._table) or self._table[j]._key != k:
+            raise KeyError("Key Error:" + repr(k))
+        return self._table[j]._value
 
 
     def __setitem__(self, k: Any, v: Any) -> None:
-        for item in self._table:
-            if k == item._key:
-                item._value = v
-                return
-        self._table.append(self._Item(k, v))
+        j = self.indice(k, 0, len(self._table) - 1)
+        if j < len(self._table) and self._table[j]._key == k:
+            # reassign value
+            self._table[j]._value = v
+        else:
+            # adds new item
+            self._table.insert(j, self._Item(k, v))
 
     
     def __delitem__(self, k: Any) -> None:
-        j = self._find_index(k, 0, len(self._table) - 1)
+        j = self.indice(k, 0, len(self._table) - 1)
         if j == len(self._table) or self._table[j]._key != k:
             raise KeyError('Key Error: ' + repr(k))
         self._table.pop(j)
@@ -48,4 +50,17 @@ class SortedTableMap(MapBase,ABC):
         for item in self._table:
             yield item
 
+
+
+    def indice(self, k, bajo, alto):
+        if alto < bajo:
+            return alto + 1
+        else:
+            media = (bajo + alto) // 2
+            if k == self._table[media]._key:
+                return media
+            elif k < self._table[media]._key:
+                return self.indice(k, bajo, media - 1)
+            else:
+                return self.indice(k, bajo + 1, alto)
     
