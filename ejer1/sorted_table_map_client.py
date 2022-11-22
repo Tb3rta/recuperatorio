@@ -31,14 +31,19 @@ for (p, c) in mapeo.items():
 print('La palabra más frecuente es:', max_palabra)
 print('El número de ocurrencias es:', max_cantidad)
 
-
+print("-------------------------------------")
+print("__repr__:")
+print(lorem_ipsum.__repr__())
+print("-------------------------------------")
+print("__len__:")
+print(lorem_ipsum.__len__())
 print("-------------------------------------")
 print("iter:")
 print(repr(lorem_ipsum.__iter__()))
+print("-------------------------------------")
 print("getitem:")
 print(lorem_ipsum.__getitem__(10))
 print(lorem_ipsum.__getitem__(44))
 
-print("-------------------------------------")
 
 
