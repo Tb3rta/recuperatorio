@@ -33,5 +33,12 @@ print('El número de ocurrencias es:', max_cantidad)
 
 
 print("-------------------------------------")
+print("iter:")
+print(repr(lorem_ipsum.__iter__()))
+print("getitem:")
+print(lorem_ipsum.__getitem__(10))
+print(lorem_ipsum.__getitem__(44))
+
+print("-------------------------------------")
 
 
